@@ -1,0 +1,22 @@
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+var threeSumClosest = function(nums, target) {
+    nums.sort((a,b)=>a-b) //排序
+    //类似上一题，采用双指针法
+    let arr = [];
+
+    for(let i=0;i<nums.length;i++){
+        let sec = i+1; //第二个数
+        let last = nums.length-1; //第三个数
+
+        while(sec<last){
+            let sum = nums[i] + nums[sec] + nums[last]; //求和
+            sum>=target? (arr[sum-target]=sum,last--):(arr[target-sum]=sum,sec++); //sum大，last左移，sum小，sec右移
+        }
+
+    }
+    return arr.find((item)=>item!==undefined); //返回最近的一个数；
+};

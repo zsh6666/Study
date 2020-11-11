@@ -1,0 +1,14 @@
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var findKthLargest = function(nums, k) {
+    //臭不要脸 直接用了排序函数呜呜呜，我太废了
+	
+    //将数组从小到大排序
+    nums.sort((a,b)=>a-b);
+    //获取倒数第k个元素
+    var len = nums.length - k ;
+    return nums[len];
+};

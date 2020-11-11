@@ -1,0 +1,10 @@
+/**
+ * @param {string} str
+ * @return {number}
+ */
+var myAtoi = function(str) {
+    //先去除前后空格，然后再正则匹配+/-/数字
+    let num = str.trim().match(/^(\-|\+)?\d+/g);
+    //匹配成功则返回，在返回时限定范围
+    return num?Math.max(Math.min(Number(num),2**31-1),-(2**31)):0;
+};

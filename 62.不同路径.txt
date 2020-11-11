@@ -1,0 +1,28 @@
+/**
+ * @param {number} m
+ * @param {number} n
+ * @return {number}
+ */
+var uniquePaths = function(m, n) {
+    //思路：
+    //机器人只能向下或向右移动, 所以:
+    //到当下格子的走法 = 到其上方格子的路径数 + 到其左方格子的路径数.
+    //dp[ i ][ j ] = dp[ i - 1 ][ j ] + dp[ i ][ j - 1 ]
+    //dp 矩阵的最上一行与最左一列可初始化为 1 . 因为, 一直向下或一直向右不转向的话, 只有一种走法.
+    var dp = new Array(n); //n行
+    for(let i=0;i<n;i++){
+        dp[i] = new Array(m); //m列
+        dp[i][0] = 1; //第一行均为1
+    }
+    for(let i = 0;i < m;i++){
+        dp[0][i] = 1; //第一列均为1
+    }
+
+    for(let i=1;i<n;i++){
+        for(let j = 1;j<m;j++){
+            dp[i][j] = dp[i-1][j] + dp [i][j-1]; //到当下格子的走法 = 到其上方格子的路径数 + 到其左方格子的路径数.
+        }   
+    }
+
+    return dp[n-1][m-1];
+};

@@ -1,0 +1,70 @@
+/**
+ * @param {number[]} gas
+ * @param {number[]} cost
+ * @return {number}
+ */
+
+第一版 错误
+var canCompleteCircuit = function(gas, cost) {
+    //寻找最大差距的加油站
+    let num = 0; //加油站标号
+    let c = 0; //差距
+    let rest = 0; //当前油箱内剩余油量
+    const len = gas.length;
+    for(let i = 0;i<len;i++){
+        let s = gas[i] - cost[i];
+        if(s > c){
+            c = s; //获得最大差距
+            num = i; //获得最大差距的加油站号
+        }
+    }
+    rest = gas[num]; //初始油量
+    for(let i = num;i<len;){
+        if(rest >= cost[i]){
+            let k = i;
+            if(i == len -1 )i=0; //到终点了，回起点
+            else{
+                i++; //去下一个加油站
+            }
+            rest = rest + gas[i] - cost[k];
+            if(i == num && rest>=cost[i]){
+                return num;
+            }
+        }else{
+            return -1;
+        }
+    }
+};
+
+
+第二版，正确
+
+/**
+ * @param {number[]} gas
+ * @param {number[]} cost
+ * @return {number}
+ */
+var canCompleteCircuit = function(gas, cost) {
+    const len=gas.length;
+    let run=remain=0;
+    let k=0;
+
+    for(let i=0;i<len;i++){
+        // run变量表示车辆在前i个加油站能够跑起来；remain表示全程预计算后油量和油耗差值
+        // 只有remain大等于0，汽车才能跑完全程
+        run+=gas[i]-cost[i];
+        remain+=gas[i]-cost[i];
+
+        // 说明车辆无法跑到第i+1加油站，因此需要重置车辆初始加油站索引
+        // 并重新开始
+        if(run<0){
+            k=i+1;
+            run=0;
+        }
+    }
+
+    return remain<0 ?-1:k
+};
+
+
+

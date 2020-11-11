@@ -1,0 +1,31 @@
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[][]}
+ */
+var fourSum = function(nums, target) {
+    let res = []; //存储结果的矩阵
+    let path = [];//存放四个数
+    nums.sort((a,b)=>a-b); //将数组重新排序
+
+    //深度搜索，依次相加
+    function DFS(start){
+        if(path.length==4){//已得到一个四元组，判断是否满足条件
+            if(path[0]+path[1]+path[2]+path[3]===target){//满足条件
+                res.push([...path]); //ES6模式匹配，嵌套数组
+            }
+            return;
+        }
+        let r; //存储单个数字
+        for(let i=start;i<nums.length;i++){
+            if(r==nums[i])continue; //跳过相同的数字，避免重复
+            r=nums[i]; 
+            path.push(r); //压入数组
+            DFS(i+1); //递归
+            path.pop(); //回溯
+        }
+    }
+    DFS(0);
+    return res;
+};
+

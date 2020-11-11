@@ -1,0 +1,45 @@
+/**
+ * @param {number[]} candidates
+ * @param {number} target
+ * @return {number[][]}
+ */
+var combinationSum2 = function(candidates, target) {
+    //对数组排序
+    candidates.sort((a,b)=>a-b);
+
+    //排除大于target的数字
+    const newArr = []
+    for(let i = 0;i<candidates.length;i++){
+        if(candidates[i]>target)break;
+        newArr.push(candidates[i]);
+    }
+
+    //数组保存结果
+    const res = [];
+
+    //回溯
+    dfs = function(path,sum,t){
+        if(sum>target){ //结果大于目标，不满足条件，退出
+            return;
+        }
+
+        if(sum===target){ //结果等于目标，添加进数组
+            res.push(path.concat());
+        }
+
+        for(let i = t; i<newArr.length;i++){
+            const lastNum = path[path.length-1] || 0;//如果第一个值为true，则返回前面的如果两个值中有false，则返回后面的。
+
+            if(newArr[i]>=lastNum){
+                if (newArr[i] === newArr[i-1] && i > t) continue;
+                path.push(newArr[i]); //满足条件，加入序列
+                dfs(path,sum + newArr[i],i+1); //回溯
+                path.pop() //恢复现场
+            }
+        }
+    }
+
+    dfs([],0,0);
+    return res;
+};
+

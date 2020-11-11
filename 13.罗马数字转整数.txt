@@ -1,0 +1,26 @@
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var romanToInt = function(s) {
+    //采用贪心算法，从前到后一次检测，然后相加
+    //写出所有罗马数字及其对应数值
+    let values = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+    let keys = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I'];
+    //保存字符串
+    let res = 0;
+    let idx;
+    //从前到后一次检测，然后相加
+    while(s.length){
+        idx= keys.indexOf(s[0]+s[1]); //判断是否符合两个字符的单位
+        if(idx>=0){
+            s = s.substring(2,s.length); //去除前两位
+        }else{
+            idx=keys.indexOf(s[0]);
+            s = s.substring(1,s.length);//去除1位
+        }
+        res+=values[idx]; //得到相应的值相加
+    }
+     return res;
+
+};

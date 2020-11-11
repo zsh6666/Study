@@ -1,0 +1,19 @@
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+var twoSum = function(nums, target) {
+    //将出现过的数的下标保存至对象中
+    let preTarget = {};
+    for(let i = 0;i < nums.length;i++){
+        const curNum = nums[i]; //当前数字
+        const targetNum = target - curNum; //目标数字
+        const targetNumIndex = preTarget[targetNum]; //目标数字的下标
+        if(targetNumIndex === undefined){//目标不在已出现的数字中
+            preTarget[curNum] = i; //将当前数字存入对象
+        }else{ //目标在已出现数字中
+            return [targetNumIndex,i]; //返回数字索引
+        }
+    }
+};

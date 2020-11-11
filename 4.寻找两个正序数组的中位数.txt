@@ -1,0 +1,42 @@
+/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number}
+ */
+var findMedianSortedArrays = function(nums1, nums2) {
+   
+
+    //nums1永远作为长度短的数组
+    if(nums1.length>nums2.length){
+        [nums1,nums2] = [nums2,nums1];
+    }
+
+    //获取两个数组的长度
+    let n1 = nums1.length;
+    let n2 = nums2.length;
+
+    //对n1数组进行二分，设置低位和高位
+    let low = 0;
+    let high = n1;
+
+    while(low <= high){
+        //i为n1数组的划分点，j为n2数组的划分点
+        const i = low + Math.floor((high - low) / 2);
+        const j = Math.floor((n1 + n2 + 1) / 2) - i;
+
+        const maxLeftA = i === 0 ? -Infinity : nums1[i-1] 
+        const minRightA = i === n1 ? Infinity : nums1[i]
+        const maxLeftB = j === 0 ? -Infinity : nums2[j-1]
+        const minRightB = j === n2 ? Infinity : nums2[j]
+
+        if (maxLeftA <= minRightB && maxLeftB <= minRightA) {
+            return (n1 + n2) % 2 === 1
+            ? Math.max(maxLeftA, maxLeftB)
+            : (Math.max(maxLeftA, maxLeftB) + Math.min(minRightA, minRightB)) / 2
+        } else if (maxLeftA > minRightB) {
+            high = i - 1  //高位向左移
+        } else { 
+            low = low + 1  //低位向右移
+        }
+    }
+};

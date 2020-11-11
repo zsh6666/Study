@@ -1,0 +1,32 @@
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLongestSubstring = function(s) {
+    //利用ES6中的set集合 保存不重复的内容
+    const occ = new Set();
+    //得到字符串的长度
+    const n = s.length;
+    //设置下标指针
+    let rk = 0;
+    //设置最大长度
+    let ans = 0;
+    //从头开始遍历字符串
+    for(let i = 0;i < n;i++){
+        //指针每次右移1位，删去左边的字符
+        if(i!=0){
+            occ.delete(s.charAt(i-1));
+        }
+        //获取以i为开头的字符串长度
+        while(rk<n && !occ.has(s.charAt(rk))){
+            //无重复，且未读完，则移动下标指针
+            occ.add(s.charAt(rk));
+            rk++;
+        }
+
+        //判断当前的长度和最大长度的大小，保留最大的
+        ans = Math.max(ans,rk-i)
+
+    }
+    return ans;
+};

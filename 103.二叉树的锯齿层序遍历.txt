@@ -1,0 +1,41 @@
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[][]}
+ */
+var zigzagLevelOrder = function(root) {
+    const res = []; //保存结果
+        if(!root){ //结点为空 直接返回空
+            return res;        
+        }
+        var dir = true;
+        const q = []; //队列
+        q.push(root); //根结点入队    
+        while(q.length!=0){ //队内元素不为0
+            const levelSize = q.length; //同层的结点数
+            res.push([]); //入队一个空数组，用于存数字    
+            if(dir){
+                for(let i = 1;i <= levelSize ;i++){
+                    const node = q.shift(); //出栈队首结点
+                    res[res.length-1].push(node.val); //在相应位置存入对应的值
+                    if(node.left)q.push(node.left); //左节点入队  
+                    if(node.right)q.push(node.right); //右节点入队       
+            }
+            }else{
+                for(let i = 1;i <= levelSize ;i++){
+                    const node = q.pop(); //出栈队尾结点
+                    res[res.length-1].push(node.val); //在相应位置存入对应的值
+                    if(node.right)q.unshift(node.right); //右节点从队首入队
+                    if(node.left)q.unshift(node.left); //左节点从队首入队  
+                }
+            }
+            dir=!dir;
+        }
+        return res;    
+};

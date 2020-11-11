@@ -1,0 +1,32 @@
+/**
+ * @param {string} beginWord
+ * @param {string} endWord
+ * @param {string[]} wordList
+ * @return {number}
+ */
+var ladderLength = function(beginWord, endWord, wordList) {
+    const charDiff = (str1, str2) => {
+    let changes = 0
+    for (let i = 0; i < str1.length; i++) {
+        if (str1[i] != str2[i]) changes += 1
+    }
+    return changes
+    }
+    let wordSet = new Set(wordList)    
+    if (!wordSet.has(endWord)) return 0
+    let queue = [[beginWord, 1]]
+    while (queue.length) {
+        let [word, transNumber] = queue.pop()   //弹出字符串 进行比较
+        if (word === endWord) return transNumber
+        for (let str of wordSet) {
+        if (charDiff(word, str) === 1) {
+            queue.unshift([str, transNumber+1])  //队列先进先出
+            wordSet.delete(str) //存在，则删去原子集中的字符串
+        }
+        }
+    }
+    
+    return 0
+
+   
+};

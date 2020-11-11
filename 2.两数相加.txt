@@ -1,0 +1,34 @@
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var addTwoNumbers = function(l1, l2) {
+    //创建头结点
+    let node = new ListNode("head");
+    //创建中间结点,作为每次相加的中间结点
+    let temp = node;
+    //使用一个变量 判断每次是否进1
+    let add = 0;
+    //每次相加的和
+    let sum = 0;
+    
+    //循环判断链表是否结束
+    while(l1||l2){
+        sum = (l1?l1.val:0) + (l2?l2.val:0) + add; //先判断是否存在，然后相加
+        temp.next = new ListNode(sum%10); //以sum的个位数赋值给temp.next
+        temp = temp.next; //temp指向下一结点
+        add = sum >=10? 1:0; //是否有进位
+        l1 && (l1 = l1.next); //判断l1是否是最后结点，否则向后移动
+        l2 && (l2 = l2.next); //判断l2是否是最后结点，否则向后移动
+    }
+    add && (temp.next = new ListNode(add)); //判断是否还有进位
+    return node.next //返回结点（不包括头部）
+};

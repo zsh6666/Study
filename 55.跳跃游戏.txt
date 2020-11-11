@@ -1,0 +1,16 @@
+/**
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+var canJump = function(nums) {
+    //计算每个点能达到的最远距离
+    let maxD = 0;
+    const length = nums.length;
+    for(let i = 0;i < length;i++){
+        if(nums[i] == 0 && maxD <= i)break;//如果当前位置值为0，且当前能到达的最远距离还小于等于这个位置，那么它已经走不到后                                           //面了，直接退出循环就好了
+        if(i + nums[i] > maxD)maxD = i + nums[i]; //从头出发能达到的最远距离
+    }
+    return maxD >= length-1 //能否达到最后
+};
+
+

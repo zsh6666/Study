@@ -1,0 +1,30 @@
+/**
+ * @param {number[]} height
+ * @return {number}
+ */
+var maxArea = function(height) {
+    //双指针法，从两头逼近，找出最大值
+    let left = 0;
+    let right = height.length-1;
+    let max = 0;
+    while(left<right){
+        const area = (right-left)*Math.min(height[left],height[right]);
+        if(area>max){
+            max = area;
+        }
+        if(height[left]<height[right]){
+            const lastLeft = height[left];
+            left++;
+            while(height[left]<lastLeft&&left<right){
+                left++;
+            }
+        }else{
+            const lastRight = height[right];
+            right--;
+            while(height[right]<lastRight&&left<right){
+                right--;
+            }
+        }
+    }
+    return max;
+};

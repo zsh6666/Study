@@ -1,0 +1,26 @@
+/**
+ * @param {number} n
+ * @return {string[]}
+ */
+var generateParenthesis = function(n) {
+    //利用回溯法，得出所有结果
+
+    const res = []; //存储所有结果
+    //深度递归，l:左括号的数目，r右括号的数目，str插入的括号
+    dfs = function(l,r,str){
+        if(l==r && l==n){
+            res.push(str); //左括号数目达最大值，匹配完成。
+        }
+        if(l<r) return; //左括号数大于右括号数，退出
+
+        if(l<n){
+            dfs(l+1,r,str + '('); //添加一个左括号
+        }
+        if(l>r){
+            dfs(l,r+1,str + ')'); //添加一个右括号
+        }
+        
+    }
+    dfs(0,0,"");
+    return res;
+};

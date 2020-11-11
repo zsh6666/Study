@@ -1,0 +1,23 @@
+/**
+ * @param {string[]} strs
+ * @return {string}
+ */
+var longestCommonPrefix = function(strs) {
+    //数组为空则直接返回空字符串
+    if (strs === null || strs.length === 0) return "";
+    //设置第一个字符串为公共子串
+    let prevs = strs[0];
+    //公共子串依次与后面的子串比较，求得公共前缀
+    for(let i = 1;i<strs.length;i++){
+        let j = 0; //从字符串的第一个字符开始比较
+        for(;j<prevs.length&&j<strs[i].length;j++){
+            if(prevs.charAt(j)!==strs[i].charAt(j))break
+        }
+        prevs = prevs.substring(0,j); //获得公共前缀
+        if(prevs==="") return "";
+    }
+
+    return prevs;
+
+};   
+

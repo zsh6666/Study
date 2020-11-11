@@ -1,0 +1,41 @@
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var isValid = function(s) {
+    let arr = []; //创建栈结构
+    let length = s.length; //获得字符串的长度
+
+    if(length%2==1) return false; //奇数直接返回false
+    //利用栈来匹配括号，左括号类型直接进栈，右括号与栈顶元素比较，不同则返回false，相同则。
+    for(let i=0;i<length;i++){
+        let ch = s[i];
+        switch(ch){
+             case "(": {
+                arr.push(ch)
+                break;
+            }
+            case "[": {
+                arr.push(ch)
+                break;
+            }
+            case "{": {
+                arr.push(ch)
+                break;
+            }
+            case ")": {
+                if (arr.pop() !== "(") return false
+                break;
+            }
+            case "]": {
+                 if (arr.pop() !== "[") return false
+                break;
+            }
+            case "}": {
+                if (arr.pop() !== "{") return false
+                break;
+            }
+        } 
+    }
+    return !arr.length //最后若栈空，则完全匹配，反之没有匹配成功。
+};

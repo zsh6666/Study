@@ -1,0 +1,61 @@
+官方答案（迭代算法）
+var mergeTwoLists = function(l1, l2) {
+    const prehead = new ListNode(-1);
+
+    let prev = prehead;
+    while (l1 != null && l2 != null) {
+        if (l1.val <= l2.val) {
+            prev.next = l1;
+            l1 = l1.next;
+        } else {
+            prev.next = l2;
+            l2 = l2.next;
+        }
+        prev = prev.next;
+    }
+
+    // 合并后 l1 和 l2 最多只有一个还未被合并完，我们直接将链表末尾指向未合并完的链表即可
+    prev.next = l1 === null ? l2 : l1;
+
+    return prehead.next;
+};
+
+zsh脑瘫迭代：
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var mergeTwoLists = function(l1, l2) {
+    let res = [];
+    let i = 0;
+    while(l1){
+        res[i]=l1.val;
+        i++;
+        l1=l1.next;
+    }
+     while(l2){
+        res[i]=l2.val;
+        i++;
+        l2=l2.next;
+    }
+    res.sort((a,b)=>a-b);
+    let l3 = new ListNode(0);
+    let head =new ListNode(0);
+    head.next = l3;
+    for(let j=0;j<i;j++){
+        let p =new ListNode(0);
+        p.val = res[j];
+        p.next = null;
+        l3.next = p;
+        l3 = l3.next;
+    }
+    return head.next.next;
+};

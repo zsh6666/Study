@@ -1,0 +1,27 @@
+/**
+ * @param {string} s
+ * @param {number} numRows
+ * @return {string}
+ */
+var convert = function(s, numRows) {
+    //一行则直接返回s
+    if(numRows==1) return s;
+
+    //用于存储字符串
+    const rows = [];
+    // 设置一个游标，表示走到了第几行
+    let loc=0;
+    //判断该上还是该下去
+    let down=false; //true 表示向下
+
+    for(let i = 0;i < s.length;i++){
+        //loc所在行填入字符
+        rows[loc] = (rows[loc]||"") + s[i];
+        if(loc==0||loc==(numRows-1)){
+            down=!down;  //刚开始，down由false改为true表示向下走
+        }
+        loc = loc + (down?1:-1);//向下或向上+1
+    }
+    return rows.join("");//将数组中的值进行拼接（以“”拼接）
+
+};
