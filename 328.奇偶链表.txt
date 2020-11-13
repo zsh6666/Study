@@ -1,0 +1,31 @@
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var oddEvenList = function(head) {
+
+    //如果结点为空，则返回空
+    if(head == null){
+        return head;
+    }
+    var evenHead = head.next; //偶数链表的头部
+    var odd = head; //奇数链表的头部
+    var even = evenHead; //偶数链表
+
+    while(even!=null && even.next!=null){
+        odd.next = even.next; //奇数在前，奇数先赋值
+        odd = odd.next; //指向下一个奇数
+        even.next = odd.next; //偶数后赋值
+        even = even.next; //指向下一个偶数
+    }
+    odd.next = evenHead; //在奇数后连接偶数链表
+
+    return head;
+};

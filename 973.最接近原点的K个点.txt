@@ -1,0 +1,71 @@
+/**
+ * @param {number[][]} points
+ * @param {number} K
+ * @return {number[][]}
+ */
+var kClosest = function(points, K) {
+    //数组长度，小于返回的长度，则直接返回数组
+    if(points.length <= K){
+        return points;
+    }   
+
+    //利用快排的分治思维
+
+    var quickSort = function(points,left,right,K){
+        //设置观察值
+        const pivot = distance(points[left]);//最左值为观察值
+
+        var l = left;
+        var r = right;
+
+        while(l<=r){
+            if (distance(points[l]) <= pivot) { // 左指针指向的元素比pivot小，没毛病，看下一个，指针右移
+                l++;
+                continue;
+            }
+            if (distance(points[r]) > pivot) { // 右指针指向的元素比pivot大，没毛病，看下一个，指针左移
+                r--;
+                continue;
+            }
+            // 左指针指向的元素比pivot大，右指针指向的元素比pivot小，交换左右指针指向的元素
+            [points[l], points[r]] = [points[r], points[l]];
+            l++;
+            r--;        // 指针同时收缩1
+        }
+        [points[left], points[r]] = [points[r], points[left]]; // 交换pivot元素和右指针指向的元素
+        if (r == K) { // 排好了
+            return;
+        } else if (r < K) { // 左边还不够K个，则[r+1:right]要继续排
+            quickSort(points, r + 1, right, K);
+        } else { // 左边大于K个，则对左边继续排
+            quickSort(points, left, r - 1, K);
+        }
+
+    }
+
+    //求距离函数
+    function distance(point) {  // 求point到原点的距离
+        return point[0] ** 2 + point[1] ** 2;
+    }
+    quickSort(points, 0, points.length - 1, K); // 范围是整个数组
+    return points.slice(0, K);  // 排完后，取前K个
+
+	/*
+	下面这段代码，是我想用map键值对的方式进行查找，发现，当有相同的key时，查出来的value相同，就会出现错误。
+	*/
+    /*var map = new Map();//存储键值对
+    var res = [];
+    for(let i = 0 ;i<points.length;i++){
+        res.push(points[i][0]**2+points[i][1]**2);
+        map.set(points[i][0]**2+points[i][1]**2,points[i]);
+    }
+
+    res.sort((a,b)=>a-b);
+    var arr = [];
+    for(let i = 0; i< K;i++){
+        arr.push(map.get(res[i]));
+        //map.delete(res[i]);
+    }
+
+    return arr;*/
+};
